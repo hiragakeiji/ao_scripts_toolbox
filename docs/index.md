@@ -1,13 +1,13 @@
-# Tool Index
+# ツール一覧（Tool Index）
 
 ## Maya
-- (add here)
+- ao_Locator_Follow_Rig_Tool — ロケータ追従リグ補助 — `maya/ao_Locator_Follow_Rig_Tool/`
 
 ## Houdini
-- (add here)
+- （追加予定）
 
-## Windows (ps1/bat)
-- (add here)
+## Windows
+- （追加予定）
 
 ## Python
-- (add here)
+- （追加予定）
