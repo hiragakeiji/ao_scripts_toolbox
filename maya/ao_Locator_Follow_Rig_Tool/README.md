@@ -8,7 +8,7 @@ Maya 用の小型ユーティリティツールです。
 ## Features / 機能
 
 - Locator + Group の自動生成
-- Group を Selection2 にスナップ（ワールド行列で一致）
+- Group を Selection2 にスナップ
 - **Freeze Transform を UI で ON/OFF**
 - Parent Constraint（すべて **Keep Offset = ON**）
   - Selection1 → Group
@@ -21,9 +21,10 @@ Maya 用の小型ユーティリティツールです。
 
 ### 1) Install (Drag & Drop) / インストール（D&D）
 
-1. `ao_LocatorFollowRigTool_download.py` を Maya のビューポートへドラッグ&ドロップ  
-2. Shelf「tool」にボタンが追加されます  
-3. ボタンを押して UI を開きます
+2. `ao_LocatorFollowRigTool.zip` をダウンロード、解凍
+2. `ao_LocatorFollowRigTool_download.py` を Maya のビューポートへドラッグ&ドロップ  
+3. Shelf「tool」にボタンが追加されます  
+4. ボタンを押して UI を開きます
 
 > 既にボタンがある場合は置き換え（更新）されます。
 

@@ -43,8 +43,8 @@ def build_follow_rig(do_freeze: bool = True):
     cmds.undoInfo(openChunk=True)
     try:
         # unique names
-        locator = cmds.spaceLocator(name="ao_follow_loc#")[0]
-        grp = cmds.group(locator, name="ao_follow_grp#")
+        locator = cmds.spaceLocator(name="follow_loc#")[0]
+        grp = cmds.group(locator, name="follow_grp#")
 
         # snap group to Selection2 (world matrix)
         m = cmds.xform(sel2, q=True, ws=True, m=True)
