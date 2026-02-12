@@ -5,11 +5,52 @@ Maya 用の小型ユーティリティツールです。
 
 ドラッグ&ドロップ（D&D）による簡易インストールに対応しており、自動でシェルフにボタンが追加されます。
 
-## ✨ Features
+## Features / 機能
 
-- **自動リグ構築**: Locator + Group を生成し、Parent Constraint で接続します。
-- **スナップ機能**: 生成された Group を Selection2（従属側）の位置へ自動スナップ（ワールド行列一致）。
-- **Freeze オプション**: UI 上で Transform の Freeze（ON/OFF）が可能。
-- **Keep Offset**: すべての Parent Constraint は `Maintain Offset = ON` で作成され、現在の位置関係を維持します。
-- **柔軟な選択**: Shape ノードを選択していても、自動で Transform ノードを取得して実行します。
-- **Dockable UI**: Maya のワークスペースにドッキング可能な PySide6 ベースの UI。
+- Locator + Group の自動生成
+- Group を Selection2 にスナップ（ワールド行列で一致）
+- **Freeze Transform を UI で ON/OFF**
+- Parent Constraint（すべて **Keep Offset = ON**）
+  - Selection1 → Group
+  - Locator → Selection2
+- Shape 選択でも動作（自動で transform を取得）
+- Dockable UI（Maya WorkspaceControl）
+- D&D インストーラー同梱（配布向け）
+
+## Usage / 使い方
+
+### 1) Install (Drag & Drop) / インストール（D&D）
+
+1. `ao_LocatorFollowRigTool_download.py` を Maya のビューポートへドラッグ&ドロップ  
+2. Shelf「tool」にボタンが追加されます  
+3. ボタンを押して UI を開きます
+
+> 既にボタンがある場合は置き換え（更新）されます。
+
+### 2) Run / 実行
+
+1. **Selection1 → Selection2 の順で 2 つ選択**
+2. UI の `apply` を押す
+3. 必要なら「ロケーターのフリーズ」を ON/OFF
+
+---
+
+## Files / 構成
+- ao_LocatorFollowRigTool_UI.py # UI（PySide6 / Dockable）
+- ao_LocatorFollowRigTool_system.py # ロジック
+- ao_LocatorFollowRigTool_download.py # D&D インストーラー
+- ao_LocatorFollowRigTool_icon.png # アイコン
+
+---
+
+## Requirements / 動作環境
+
+- Autodesk Maya 2025
+- Python 3.x (Maya 同梱)
+- PySide6（Maya 2025 同梱）
+
+---
+
+## Author
+
+Hiraga Keiji
