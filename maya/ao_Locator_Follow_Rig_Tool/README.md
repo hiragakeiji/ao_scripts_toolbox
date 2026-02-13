@@ -48,7 +48,6 @@ Maya 用の小型ユーティリティツールです。
 
 - Autodesk Maya 2025
 - Python 3.x (Maya 同梱)
-- PySide6（Maya 2025 同梱）
 
 ---
 
