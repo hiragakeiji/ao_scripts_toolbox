@@ -1,95 +1,62 @@
 # -*- coding: utf-8 -*-
 """
-ao_LocatorFollowRigTool_UI.py
+ao_LocatorFollowRigTool_UI.py  (cmds UI version)
 
-Maya 2025 / PySide6
-Dockable UI (floating first)
+Maya 2024 and earlier compatible (no PySide6 required)
 
+Shelf command:
+    import ao_LocatorFollowRigTool_UI as m
+    m.run()
 """
 
 import maya.cmds as cmds
-
-from PySide6 import QtCore, QtWidgets
-from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
-
 import ao_LocatorFollowRigTool_system as system
 
+WIN_NAME = "aoLocatorFollowRigTool_win"
+WIN_TITLE = "ao Locator Follow Rig Tool"
 
-_WINDOW_INSTANCE = None
-
-
-class AoLocatorFollowRigTool(MayaQWidgetDockableMixin, QtWidgets.QDialog):
-    WINDOW_TITLE = "ao Locator Follow Rig Tool"
-    OBJECT_NAME = "aoLocatorFollowRigTool_UI" 
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setWindowTitle(self.WINDOW_TITLE)
-        self.setObjectName(self.OBJECT_NAME)
-        self.setMinimumWidth(200)
-
-        self._build_ui()
-        self._connect()
-
-    def _build_ui(self):
-        title = QtWidgets.QLabel(self.WINDOW_TITLE)
-        title.setAlignment(QtCore.Qt.AlignCenter)
-        f = title.font()
-        f.setPointSize(max(10, f.pointSize() + 2))
-        title.setFont(f)
-
-        self.btn_apply = QtWidgets.QPushButton("apply")
-        self.btn_apply.setMinimumHeight(44)
-
-        self.lbl_freeze = QtWidgets.QLabel("ロケーターのフリーズ")
-        self.chk_freeze = QtWidgets.QCheckBox()
-        self.chk_freeze.setChecked(True)  # default ON
-
-        row = QtWidgets.QHBoxLayout()
-        row.setContentsMargins(0, 0, 0, 0)
-        row.addWidget(self.lbl_freeze)
-        row.addStretch(1)
-        row.addWidget(self.chk_freeze)
-
-        main = QtWidgets.QVBoxLayout(self)
-        main.setContentsMargins(18, 16, 18, 16)
-        main.setSpacing(12)
-        main.addWidget(title)
-        main.addSpacing(6)
-        main.addWidget(self.btn_apply)
-        main.addLayout(row)
-
-    def _connect(self):
-        self.btn_apply.clicked.connect(self.on_apply)
-
-    def on_apply(self):
-        do_freeze = self.chk_freeze.isChecked()
-        system.build_follow_rig(do_freeze=do_freeze)
+# control names
+CHK_FREEZE = "aoLocatorFollowRigTool_chkFreeze"
+BTN_APPLY  = "aoLocatorFollowRigTool_btnApply"
 
 
-def _delete_existing_workspace_control():
-    """
-    既存の WorkspaceControl が残っていると
-    '...WorkspaceControl が固有ではありません' が出るので先に消す。
-    """
-    dock_name = AoLocatorFollowRigTool.OBJECT_NAME + "WorkspaceControl"
-    if cmds.workspaceControl(dock_name, q=True, exists=True):
-        cmds.deleteUI(dock_name)
+def _close_existing():
+    if cmds.window(WIN_NAME, exists=True):
+        cmds.deleteUI(WIN_NAME)
+
+
+def _on_apply(*args):
+    do_freeze = cmds.checkBox(CHK_FREEZE, q=True, v=True)
+    system.build_follow_rig(do_freeze=do_freeze)
 
 
 def run():
-    """Entry point for shelf button."""
-    global _WINDOW_INSTANCE
+    """Entry point"""
+    _close_existing()
 
-    _delete_existing_workspace_control()
+    # window
+    cmds.window(WIN_NAME, title=WIN_TITLE, sizeable=False)
 
-    try:
-        if _WINDOW_INSTANCE is not None:
-            _WINDOW_INSTANCE.close()
-            _WINDOW_INSTANCE.deleteLater()
-    except Exception:
-        pass
+    # --- layout
+    # 画像みたいにシンプルに：タイトル / apply / フリーズチェック
+    cmds.columnLayout(adj=True, rowSpacing=12, columnAlign="center")
 
-    _WINDOW_INSTANCE = AoLocatorFollowRigTool()
-    _WINDOW_INSTANCE.show(dockable=True, floating=True)
-    return _WINDOW_INSTANCE
+    cmds.text(label=WIN_TITLE, align="center")
+    cmds.separator(style="none", height=6)
+
+    cmds.button(
+        BTN_APPLY,
+        label="apply",
+        height=44,
+        command=_on_apply
+    )
+
+    cmds.rowLayout(numberOfColumns=2, adjustableColumn=1, columnAlign=(1, "left"), columnAttach=[(1, "both", 0), (2, "right", 0)])
+    cmds.text(label="ロケーターのフリーズ")
+    cmds.checkBox(CHK_FREEZE, v=True)  # default ON
+    cmds.setParent("..")  # rowLayout end
+
+    cmds.separator(style="none", height=6)
+
+    cmds.showWindow(WIN_NAME)
+    return WIN_NAME
