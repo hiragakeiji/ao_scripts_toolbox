@@ -54,3 +54,5 @@ Maya 用の小型ユーティリティツールです。
 ## Author
 
 Hiraga Keiji
+
+v1.1.3
