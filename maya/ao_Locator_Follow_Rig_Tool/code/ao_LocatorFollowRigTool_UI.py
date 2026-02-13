@@ -16,7 +16,7 @@ WIN_NAME = "aoLocatorFollowRigTool_win"
 WIN_TITLE = "ao Locator Follow Rig Tool"
 
 # control names
-CHK_FREEZE = "aoLocatorFollowRigTool_chkFreeze"
+CHK_FREEZE = "chkFreeze"
 BTN_APPLY  = "aoLocatorFollowRigTool_btnApply"
 
 
@@ -35,11 +35,11 @@ def run():
     _close_existing()
 
     # window
-    cmds.window(WIN_NAME, title=WIN_TITLE, sizeable=False)
+    cmds.window(WIN_NAME, title=WIN_TITLE, sizeable=True, widthHeight=(300, 160))
 
     # --- layout
     # 画像みたいにシンプルに：タイトル / apply / フリーズチェック
-    cmds.columnLayout(adj=True, rowSpacing=12, columnAlign="center")
+    cmds.columnLayout(adj=True, rowSpacing=6, columnAlign="center")
 
     cmds.text(label=WIN_TITLE, align="center")
     cmds.separator(style="none", height=6)
@@ -47,7 +47,7 @@ def run():
     cmds.button(
         BTN_APPLY,
         label="apply",
-        height=44,
+        height=34,
         command=_on_apply
     )
 
@@ -56,7 +56,7 @@ def run():
     cmds.checkBox(CHK_FREEZE, v=True)  # default ON
     cmds.setParent("..")  # rowLayout end
 
-    cmds.separator(style="none", height=6)
+    cmds.separator(style="none", height=3)
 
     cmds.showWindow(WIN_NAME)
     return WIN_NAME
